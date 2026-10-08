@@ -1,0 +1,726 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>comparaison voiture électrique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+/* Layout: one calm column of sections, summary (classement) first, detail (graphique, gabarit, tableau, fiches) after. */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --ink:#15212c; --ink-2:#475665; --muted:#7a8794;
+  --line:#dde3e9; --accent:#1e6a86; --accent-soft:#e2eff4; --bar:#2a78d6; --bar-soft:#b7d3f6;
+  --ref:#b45309; --good:#0a7a33; --warn:#9a5a00; --bad:#b42323;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1418; --surface:#172028; --ink:#eef2f5; --ink-2:#b8c3cc; --muted:#8693a0;
+  --line:#2a3540; --accent:#62b4d0; --accent-soft:#1c3340; --bar:#3987e5; --bar-soft:#1c5cab;
+  --ref:#f0a24b; --good:#43cf74; --warn:#f0b44b; --bad:#f07a7a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1418; --surface:#172028; --ink:#eef2f5; --ink-2:#b8c3cc; --muted:#8693a0;
+  --line:#2a3540; --accent:#62b4d0; --accent-soft:#1c3340; --bar:#3987e5; --bar-soft:#1c5cab;
+  --ref:#f0a24b; --good:#43cf74; --warn:#f0b44b; --bad:#f07a7a; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.5}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:clamp(16px,4vw,32px);padding-block:28px 64px;display:grid;gap:44px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:1.55rem;font-weight:700}
+h3{font-size:1.12rem;font-weight:700}
+p{margin:0}
+.lede{color:var(--ink-2);max-width:66ch;font-size:1.08rem}
+.eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);font-weight:700}
+.sec-head{display:grid;gap:6px;margin-bottom:18px}
+.sec-head p{color:var(--ink-2);max-width:70ch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.num{font-variant-numeric:tabular-nums}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* header */
+header{display:grid;gap:14px}
+.meta{font-size:.9rem;color:var(--muted)}
+
+/* brief */
+.brief{display:grid;grid-template-columns:1.1fr 1fr;gap:20px}
+.brief > *{min-width:0}
+.needs{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:9px}
+.needs li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start}
+.needs svg{margin-top:3px}
+.answers{display:grid;gap:14px}
+.answer{padding:16px 18px;border-radius:12px;background:var(--accent-soft)}
+.answer h3{margin-bottom:6px}
+.answer p{color:var(--ink-2)}
+.answer strong{color:var(--ink)}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:.78rem;font-weight:600;padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap;background:var(--surface)}
+.chip.ok{color:var(--good);border-color:currentColor}
+.chip.no{color:var(--bad);border-color:currentColor}
+.chip.mid{color:var(--warn);border-color:currentColor}
+.chip.st-suggestion{background:var(--accent);color:var(--surface);border-color:var(--accent)}
+.chip.st-alternative{color:var(--accent);border-color:var(--accent)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+
+/* ranking */
+.rank-grid{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
+.rank-grid > *{min-width:0}
+.weights{display:grid;gap:14px}
+.w-row{display:grid;gap:3px}
+.w-row label{display:flex;justify-content:space-between;font-weight:600;font-size:.95rem}
+.w-row label span{font-weight:400;color:var(--muted);font-size:.85rem}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.toggles{display:grid;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
+.toggles label{display:flex;gap:8px;align-items:center;font-size:.95rem}
+input[type=checkbox]{accent-color:var(--accent);width:17px;height:17px}
+.reset{justify-self:start;background:none;border:1px solid var(--line);border-radius:8px;padding:5px 12px;cursor:pointer;font-size:.9rem;color:var(--ink-2)}
+.reset:hover{border-color:var(--accent);color:var(--accent)}
+
+.ranking{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.r-item{display:grid;grid-template-columns:34px 1fr 150px 36px;gap:12px;align-items:center;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.r-item.top{border-color:var(--accent)}
+.r-pos{font-family:var(--f-display);font-size:1.3rem;font-weight:700;color:var(--muted);text-align:center}
+.r-item.top .r-pos{color:var(--accent)}
+.r-name{min-width:0;display:grid;gap:4px}
+.r-name b{font-size:1.04rem}
+.r-name small{color:var(--muted);font-size:.85rem}
+.r-score{display:grid;grid-template-columns:1fr 34px;gap:8px;align-items:center}
+.track{height:10px;background:var(--line);border-radius:5px;overflow:hidden}
+.fill{height:100%;background:var(--bar);border-radius:0 4px 4px 0}
+.r-score .num{font-weight:700;text-align:right}
+.heart{background:none;border:none;cursor:pointer;padding:4px;border-radius:6px;color:var(--muted);display:grid;place-items:center}
+.heart[aria-pressed="true"]{color:var(--bad)}
+.heart[aria-pressed="true"] path{fill:currentColor}
+.note{font-size:.88rem;color:var(--muted);margin-top:10px}
+
+/* chart */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.tab{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;cursor:pointer;font-size:.92rem;color:var(--ink-2)}
+.tab:hover{border-color:var(--accent)}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface);font-weight:600}
+.chart-cap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;margin-bottom:14px}
+.chart-cap p{color:var(--ink-2);max-width:62ch}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.85rem;color:var(--ink-2);align-items:center}
+.legend i{display:inline-block;width:18px;height:0;border-top:2px dashed var(--ref);vertical-align:middle;margin-right:5px}
+.chart{display:grid;gap:4px;position:relative}
+.c-row{display:grid;grid-template-columns:minmax(120px,190px) 1fr 92px;gap:12px;align-items:center;padding:5px 0;border-radius:6px;cursor:default}
+.c-row:hover,.c-row:focus{background:var(--accent-soft);outline:none}
+.c-label{font-size:.93rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c-track{position:relative;height:22px}
+.c-bar{position:absolute;top:5px;height:12px;background:var(--bar);border-radius:0 4px 4px 0;left:0}
+.c-ext{position:absolute;top:5px;height:12px;background:var(--bar-soft);border-radius:0 4px 4px 0}
+.c-dot{position:absolute;top:3px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--bar);border:2px solid var(--surface)}
+.c-val{text-align:right;font-weight:600;font-size:.93rem}
+.c-refs{position:absolute;inset:0;pointer-events:none}
+.c-ref{position:absolute;top:0;bottom:0;border-left:2px dashed var(--ref)}
+.c-ref span{position:absolute;left:4px;font-size:.75rem;color:var(--ref);white-space:nowrap;font-weight:600;background:var(--surface);padding:0 3px}
+.c-axis{display:grid;grid-template-columns:minmax(120px,190px) 1fr 92px;gap:12px;font-size:.78rem;color:var(--muted)}
+.c-axis div:nth-child(2){display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:4px}
+.tip{position:fixed;z-index:10;pointer-events:none;background:var(--ink);color:var(--bg);padding:8px 11px;border-radius:8px;font-size:.85rem;max-width:260px;line-height:1.35}
+.chart-top{padding-top:58px}
+.c-row{position:relative;z-index:1}
+
+/* gabarit */
+.gab-grid{display:grid;grid-template-columns:1fr 280px;gap:20px;align-items:start}
+.gab-grid > *{min-width:0}
+.gab-svgs{display:grid;gap:10px}
+.gab-svgs svg{width:100%;height:auto;display:block}
+.gab-side{display:grid;gap:14px}
+.gab-side select{width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface)}
+.cmp{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:.95rem}
+.cmp li{display:grid;gap:2px;padding:10px 12px;border-radius:10px;background:var(--accent-soft)}
+.cmp b{font-size:.85rem;color:var(--ink-2)}
+.gab-legend{display:grid;gap:6px;font-size:.9rem}
+.gab-legend label{display:flex;gap:8px;align-items:center}
+.sw{width:26px;height:0;border-top:2px solid var(--accent)}
+.view-label{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+
+/* table */
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:980px}
+th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+th{font-weight:700;color:var(--ink-2);font-size:.82rem;position:sticky;top:0;background:var(--surface)}
+th button{background:none;border:none;font:inherit;color:inherit;cursor:pointer;padding:0}
+th button:hover{color:var(--accent)}
+tbody tr:hover{background:var(--accent-soft)}
+td.best{color:var(--good);font-weight:700}
+td.worst{color:var(--bad)}
+
+/* fiches */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;align-content:start}
+.card-head{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start}
+.card-head small{display:block;color:var(--muted);font-size:.86rem;margin-top:2px}
+.specs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.specs div{display:grid;gap:0}
+.specs b{font-size:1.02rem}
+.specs span{font-size:.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.92rem}
+.pc ul{margin:4px 0 0;padding-left:18px;display:grid;gap:3px}
+.pc h4{margin:0;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em}
+.pc .p h4{color:var(--good)} .pc .c h4{color:var(--bad)}
+.winter{font-size:.9rem;color:var(--ink-2);padding-top:10px;border-top:1px solid var(--line)}
+.verdict{font-size:.95rem;padding:10px 12px;border-radius:10px;background:var(--accent-soft)}
+.status-note{font-size:.88rem;color:var(--ink-2);font-style:italic}
+
+.howto{list-style:none;counter-reset:h;margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.howto li{counter-increment:h;display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;padding:12px 14px;border-radius:12px;background:var(--accent-soft);font-size:.95rem;color:var(--ink-2)}
+.howto li::before{content:counter(h);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--surface);font-weight:700;font-family:var(--f-display)}
+.howto b{color:var(--ink)}
+.jump{justify-self:start;display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:999px;background:var(--accent);color:var(--surface);font-weight:600;text-decoration:none}
+footer{font-size:.88rem;color:var(--muted);display:grid;gap:8px;max-width:80ch}
+
+@media (max-width:860px){
+  .brief,.rank-grid,.gab-grid{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .r-item{grid-template-columns:26px 1fr 36px}
+  .r-score{grid-column:2 / 4}
+  .c-row,.c-axis{grid-template-columns:96px 1fr 70px;gap:8px}
+  .c-label{font-size:.82rem}
+  .pc{grid-template-columns:1fr}
+  .specs{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:no-preference){.fill,.c-bar,.c-ext,.c-dot{transition:width .35s ease,left .35s ease}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Comparatif SUV compacts 100 % électriques</span>
+    <h1>Notre premier électrique</h1>
+    <p class="lede">Neuf modèles passés au crible pour des trajets surtout en ville et des sorties courtes : un gabarit un peu plus compact que notre Kia Niro, une assise plus haute que la Scirocco, de la place derrière pour un grand, et une recharge rapide.</p>
+    <p class="meta">Chiffres constructeurs (WLTP) et prix catalogue suisses indicatifs (CHF), octobre 2026. À vérifier en concession avant toute décision.</p>
+    <a class="jump" href="#classement">Voir le classement et le régler ↓</a>
+  </header>
+
+  <section class="brief" aria-labelledby="t-brief">
+    <div class="panel">
+      <span class="eyebrow">Le cahier des charges</span>
+      <h2 id="t-brief" style="margin-top:4px">Ce qu'ils recherchent</h2>
+      <ul class="needs" id="needs"></ul>
+    </div>
+    <div class="answers">
+      <div class="answer">
+        <h3>Écartées : Hyundai Ioniq 5 et Audi</h3>
+        <p>L'<strong>Ioniq 5</strong> est très réussie, mais avec 4,66 m de long et 1,89 m de large, elle est plus large que l'A4 et presque aussi longue : trop encombrante pour les places de parking en ville. L'<strong>Audi Q3</strong> n'existe pas en 100 % électrique (seulement en hybride, exclu), et son équivalent électrique, le Q4 e-tron, mesure 4,59 m pour un prix élevé.</p>
+      </div>
+      <div class="answer">
+        <h3>La bonne taille : Kona, EV3 et ID.3 Neo</h3>
+        <p>Entre 4,26 et 4,36 m de long : plus hautes que la Scirocco, nettement plus courtes que l'A4, et plus compactes que l'Elroq ou l'Explorer, jugés trop grands. L'<strong>Epiq</strong> (4,17 m) est peut-être un peu petite ; le <strong>Scénic</strong> et le <strong>C-HR+</strong> ont la taille de l'Elroq.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-rank" id="classement">
+    <div class="sec-head">
+      <span class="eyebrow">Classement</span>
+      <h2 id="t-rank">Quelle voiture leur correspond le mieux ?</h2>
+      <p>Chaque voiture reçoit un score sur 100 qui combine les critères, pondérés selon ce qui compte le plus pour vous.</p>
+    </div>
+    <ol class="howto">
+      <li><b>Réglez les curseurs</b> à gauche : de « Ignoré » à « Essentiel » pour chaque critère.</li>
+      <li><b>Le classement se recalcule</b> aussitôt, ainsi que la colonne Score du tableau complet.</li>
+      <li><b>Cochez les filtres</b> pour masquer les tractions seules ou la Mégane déjà écartée.</li>
+      <li><b>Touchez le cœur</b> pour marquer vos favorites. Réglages et favoris restent mémorisés sur votre appareil.</li>
+    </ol>
+    <div class="rank-grid">
+      <div class="panel weights" id="weights"></div>
+      <div>
+        <ol class="ranking" id="ranking"></ol>
+        <p class="note">Les voitures écartées sont masquées : décochez la case à gauche pour les revoir. Les places arrière sont notées de 1 à 5 à partir de l'empattement, des essais publiés et de la garde au toit. C'est une appréciation, pas une mesure.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-chart">
+    <div class="sec-head">
+      <span class="eyebrow">Critère par critère</span>
+      <h2 id="t-chart">Comparer un point précis</h2>
+    </div>
+    <div class="panel">
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div class="chart-cap"><p id="chart-note"></p><div class="legend" id="chart-legend"></div></div>
+      <div class="chart" id="chart"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-gab">
+    <div class="sec-head">
+      <span class="eyebrow">Gabarit</span>
+      <h2 id="t-gab">À côté de l'A4 et de la Scirocco</h2>
+      <p>Les silhouettes sont à l'échelle (longueur, largeur, hauteur, empattement). La forme est schématique.</p>
+    </div>
+    <div class="panel gab-grid">
+      <div class="gab-svgs">
+        <span class="view-label">De profil</span>
+        <svg id="svg-side" viewBox="-10 -10 500 200" role="img" aria-label="Profil comparé"></svg>
+        <span class="view-label">Vue de dessus</span>
+        <svg id="svg-top" viewBox="-10 -10 500 210" role="img" aria-label="Vue de dessus comparée"></svg>
+      </div>
+      <div class="gab-side">
+        <label for="gab-car" style="font-weight:600">Modèle</label>
+        <select id="gab-car"></select>
+        <div class="gab-legend" id="gab-legend"></div>
+        <ul class="cmp" id="gab-cmp"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-table">
+    <div class="sec-head">
+      <span class="eyebrow">Tableau complet</span>
+      <h2 id="t-table">Toutes les données</h2>
+      <p>Cliquez sur un titre de colonne pour trier. En vert, la meilleure valeur ; en rouge, la moins bonne.</p>
+    </div>
+    <div class="tbl-wrap"><table id="table"></table></div>
+  </section>
+
+  <section aria-labelledby="t-cards">
+    <div class="sec-head">
+      <span class="eyebrow">Fiches modèles</span>
+      <h2 id="t-cards">Le détail, voiture par voiture</h2>
+      <p>Version retenue pour la comparaison, points forts, points faibles et équipement hiver (pompe à chaleur, préchauffage de la batterie).</p>
+    </div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <footer>
+    <p><strong>À propos des chiffres.</strong> Autonomies WLTP (comptez 20 à 30 % de moins par grand froid et sur autoroute). Temps de recharge 10→80 % sur borne rapide, dans de bonnes conditions. Prix catalogue suisses en francs, hors remises et primes d'importateur, pour la gamme de versions pertinente.</p>
+    <p><strong>Bon à savoir.</strong> Pour un usage surtout urbain, une prise ou une borne à domicile compte davantage que la puissance de recharge rapide. <strong>Traction, propulsion ou 4×4 ?</strong> Ce n'est pas une exigence de leur part, mais notre suggestion : sur notre Kia Niro (traction), les roues avant patinent facilement au démarrage, sur route mouillée ou en côte. Une propulsion ou un 4×4 évite ce défaut et braque souvent plus court. La traction avant reste toutefois tout à fait adaptée à la ville avec de bons pneus hiver ; d'où le réglage « Un peu » par défaut. En Suisse, plusieurs cantons réduisent ou suppriment l'impôt sur les véhicules électriques, et certains fournisseurs d'énergie subventionnent la borne à domicile : à vérifier selon le canton.</p>
+    <p>Exclus d'office : hybrides et hybrides rechargeables, marques chinoises et marques appartenant à des groupes chinois (MG, BYD, Volvo EX30, Smart, Polestar…).</p>
+  </footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const REF = {
+  niro:     {nom:"Kia Niro (notre voiture)", short:"Niro", L:4.42, W:1.825, H:1.57, wb:2.72},
+  a4:       {nom:"Audi A4 (leur ancienne)", short:"A4", L:4.76, W:1.84, H:1.43, wb:2.82},
+  scirocco: {nom:"VW Scirocco (leur ancienne)", short:"Scirocco", L:4.26, W:1.81, H:1.40, wb:2.58}
+};
+
+const STATUT = {
+  essayee:{t:"Essayée", cls:"no"}, ecartee:{t:"Écartée", cls:"no"},
+  vue:{t:"Vue", cls:""},
+  suggestion:{t:"Suggestion", cls:"st-suggestion"},
+  alternative:{t:"Remplace le Q3", cls:"st-alternative"}
+};
+
+const TRANS = {FWD:"Traction", RWD:"Propulsion", "RWD/AWD":"Propulsion ou 4×4", "AWD":"4×4", "FWD/AWD":"Traction ou 4×4"};
+
+const CARS = [
+ {id:"explorer", nom:"Ford Explorer", version:"Extended Range propulsion, 77 kWh, 286 ch", statut:"ecartee",
+  statutNote:"Écartée : trop grande, même gabarit que l'Elroq.",
+  trans:"RWD/AWD", L:4.47, W:1.87, H:1.63, wb:2.77, coffre:450, arriere:4, dc:135, t1080:28, auto:600, braq:9.8, pmin:44, pmax:55, hiver:3,
+  hiverTxt:"Pompe à chaleur de série sur Extended Range, préchauffage de la batterie, sièges et volant chauffants selon finition.",
+  pour:["Propulsion de série, 4×4 disponible","Braquage très court","Grande autonomie","Style plus « SUV » que l'Elroq"],
+  contre:["Coffre un peu plus petit que l'Elroq","Prix un peu au-dessus de l'Elroq","Peu de rangements à l'arrière"],
+  verdict:"Bonne voiture, mais aussi grande que l'Elroq : écartée pour la même raison. Gardée ici pour comparaison."},
+ {id:"elroq", nom:"Skoda Elroq", version:"85, 77 kWh, 286 ch (propulsion)", statut:"ecartee",
+  statutNote:"Écartée : trop grande, impression de « voiture familiale ».",
+  trans:"RWD/AWD", L:4.49, W:1.88, H:1.63, wb:2.77, coffre:470, arriere:4, dc:175, t1080:28, auto:570, braq:9.3, pmin:37, pmax:49, hiver:2,
+  hiverTxt:"Pompe à chaleur selon version ou en option (pack), préchauffage de la batterie, sièges chauffants.",
+  pour:["Braquage le plus court du lot (9,3 m)","Propulsion (4×4 sur la RS)","Bonne place arrière","Excellent rapport prix/prestations"],
+  contre:["Image familiale qu'ils n'ont pas aimée","Assez large (1,88 m)"],
+  verdict:"Très complète, mais trop grande pour eux. Gardée ici pour comparaison."},
+ {id:"id3", nom:"VW ID.3 Neo", version:"Pro S, 79 kWh, 231 ch", statut:"vue",
+  statutNote:"Vue.",
+  trans:"RWD", L:4.26, W:1.81, H:1.56, wb:2.77, coffre:385, arriere:3, dc:185, t1080:26, auto:600, braq:10.2, pmin:37, pmax:47, hiver:2,
+  hiverTxt:"Pompe à chaleur en option (pack hiver), sièges et volant chauffants selon finition.",
+  pour:["Même longueur que la Scirocco, mais 16 cm plus haute","Propulsion, très maniable","Empattement long pour sa taille","Intérieur revu, vrais boutons"],
+  contre:["Compacte plutôt que vrai crossover","Plus petit coffre du lot","Pas de 4×4"],
+  verdict:"Dans la taille idéale : le gabarit de la Scirocco avec plus de hauteur et de place, et la propulsion. À vérifier : le coffre, le plus petit du lot."},
+ {id:"chr", nom:"Toyota C-HR+", version:"77 kWh 4×4, 343 ch", statut:"vue",
+  statutNote:"Vue. Plus longue que l'Elroq (4,52 m) : probablement trop grande aussi.",
+  trans:"FWD/AWD", L:4.52, W:1.87, H:1.595, wb:2.75, coffre:416, arriere:3, dc:150, t1080:28, auto:525, braq:10.8, pmin:42, pmax:55, hiver:3,
+  hiverTxt:"Pompe à chaleur de série, préchauffage de la batterie, sièges chauffants.",
+  pour:["Vrai 4×4 disponible","Réputation de fiabilité Toyota","Recharge rapide sur la 77 kWh","Bien équipé"],
+  contre:["Toit fuyant : garde au toit arrière à vérifier pour un grand","Coffre moyen","Version 4×4 très puissante, et plus chère"],
+  verdict:"La 4×4 « raisonnable » du lot. À essayer avec le passager grand assis derrière."},
+ {id:"scenic", nom:"Renault Scénic E-Tech", version:"Grande autonomie, 87 kWh, 220 ch", statut:"vue",
+  statutNote:"Vue. Même longueur que l'Explorer (4,47 m) : probablement trop grande aussi.",
+  trans:"FWD", L:4.47, W:1.86, H:1.57, wb:2.785, coffre:545, arriere:5, dc:150, t1080:37, auto:610, braq:11.0, pmin:41, pmax:52, hiver:3,
+  hiverTxt:"Pompe à chaleur de série (87 kWh), préchauffage automatique de la batterie.",
+  pour:["Meilleure place arrière du lot","Plus grand coffre du lot","Grande autonomie","Fabriquée en France (Douai)"],
+  contre:["Traction uniquement","Esprit un peu « familial »","Recharge rapide moins rapide"],
+  verdict:"Le meilleur espace à bord pour sa taille. Si la traction avant ne les gêne pas, une vraie candidate."},
+ {id:"ev3", nom:"Kia EV3", version:"Grande autonomie, 81,4 kWh, 204 ch", statut:"vue",
+  statutNote:"Vue.",
+  trans:"FWD", L:4.30, W:1.85, H:1.56, wb:2.68, coffre:460, arriere:3, dc:128, t1080:31, auto:600, braq:10.4, pmin:37, pmax:48, hiver:2,
+  hiverTxt:"Pompe à chaleur de série sur GT-Line, en option sinon. Préchauffage de la batterie.",
+  pour:["Grande autonomie pour sa taille","Compacte et maniable","Bien équipée","Garantie 7 ans"],
+  contre:["Traction uniquement","Arrière juste pour un grand","Recharge correcte, sans plus"],
+  verdict:"Dans la taille idéale, avec une grande autonomie. Bémols : traction seule et place arrière correcte sans plus."},
+ {id:"kona", nom:"Hyundai Kona Electric", version:"65,4 kWh, 218 ch", statut:"vue",
+  statutNote:"Vue.",
+  trans:"FWD", L:4.355, W:1.825, H:1.575, wb:2.66, coffre:466, arriere:3, dc:102, t1080:41, auto:514, braq:10.6, pmin:37, pmax:47, hiver:2,
+  hiverTxt:"Pompe à chaleur et pack hiver selon finition.",
+  pour:["7 cm plus courte que notre Niro","Assise haute","Fabriqué en Europe (Tchéquie)","Fiabilité reconnue"],
+  contre:["Recharge la plus lente du lot","Traction uniquement","Autonomie moyenne"],
+  verdict:"Dans la taille idéale, assise haute et bon coffre. Sa recharge rapide est lente, mais cela compte peu avec une borne à domicile."},
+ {id:"epiq", nom:"Skoda Epiq", version:"56 kWh, 211 ch (données provisoires)", statut:"vue",
+  statutNote:"Vue. Peut-être un peu petite : vérifier la place arrière à l'essai. Données encore provisoires.",
+  trans:"FWD", L:4.17, W:1.80, H:1.62, wb:2.60, coffre:475, arriere:2.5, dc:133, t1080:28, auto:430, braq:10.3, pmin:29, pmax:38, hiver:2,
+  hiverTxt:"Équipement hiver à confirmer à la commercialisation (pompe à chaleur probablement en option).",
+  pour:["La plus compacte, assise haute","Grand coffre pour sa taille","Prix le plus bas de la sélection"],
+  contre:["Traction uniquement","Empattement court : arrière plus juste que Kona ou ID.3","Autonomie la plus faible"],
+  verdict:"La plus compacte de la sélection, avec une assise haute et un grand coffre. À essayer surtout pour vérifier la place arrière avec un passager grand."},
+ {id:"megane", nom:"Renault Mégane E-Tech", version:"EV60, 60 kWh, 220 ch", statut:"essayee",
+  statutNote:"Essayée : jugée un peu petite, places arrière trop serrées.",
+  trans:"FWD", L:4.20, W:1.77, H:1.50, wb:2.685, coffre:440, arriere:2, dc:130, t1080:32, auto:450, braq:10.5, pmin:34, pmax:43, hiver:2,
+  hiverTxt:"Pompe à chaleur de série sur les finitions hautes, préchauffage de la batterie.",
+  pour:["Compacte et agile","Prix contenu","Fabriquée en France"],
+  contre:["Assise basse (1,50 m)","Rang arrière étroit","Traction uniquement"],
+  verdict:"Écartée à juste titre : trop proche de la Scirocco en hauteur et trop juste à l'arrière."}
+];
+
+const CRIT = [
+  {k:"taille",   t:"Taille (longueur, largeur)", d:3, help:"idéal : 4,25 à 4,36 m, étroite"},
+  {k:"maniab",   t:"Maniabilité", d:2, help:"braquage court pour manœuvrer"},
+  {k:"hauteur",  t:"Assise surélevée", d:2, help:"plus facile pour monter et descendre"},
+  {k:"arriere",  t:"Place arrière", d:3, help:"pour un passager grand"},
+  {k:"coffre",   t:"Coffre", d:2, help:"raisonnable : 440 L ou plus"},
+  {k:"recharge", t:"Recharge rapide", d:1, help:"temps 10→80 %, utile sur route"},
+  {k:"auto",     t:"Autonomie", d:1, help:"500 km WLTP suffisent largement"},
+  {k:"trans",    t:"Propulsion ou 4×4", d:1, help:"notre suggestion, pas une exigence : la traction suffit en ville avec des pneus hiver"},
+  {k:"prix",     t:"Prix", d:1, help:"toutes dans le budget ; moins cher = mieux"},
+  {k:"hiver",    t:"Équipement hiver", d:1, help:"pompe à chaleur, préchauffage"}
+];
+const W_LABEL = ["Ignoré","Un peu","Important","Essentiel"];
+const c01 = x => Math.max(0, Math.min(1, x));
+
+function parts(c){
+  // sweet spot 4,25–4,36 m: longer cars lose points fast, shorter ones a little
+  const len = c.L > 4.36 ? 1 - c01((c.L - 4.36) / 0.14) : 1 - c01((4.25 - c.L) / 0.15);
+  const wid = 1 - c01((c.W - 1.80) / 0.09);
+  return {
+    taille: .6*len + .4*wid,
+    maniab: 1 - c01((c.braq - 9.3) / 2.7),
+    hauteur: c01((c.H - 1.45) / 0.10),
+    arriere: (c.arriere - 1) / 4,
+    coffre: c01((c.coffre - 380) / 60),
+    recharge: c01((45 - c.t1080) / 15),
+    auto: c01((c.auto - 400) / 100),
+    trans: c.trans === "FWD" ? 0 : c.trans === "FWD/AWD" ? .85 : 1,
+    prix: 1 - c01(((c.pmin + c.pmax) / 2 - 33) / 18),
+    hiver: (c.hiver - 1) / 2
+  };
+}
+
+/* ---------- state ---------- */
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+const weights = Object.assign(Object.fromEntries(CRIT.map(c => [c.k, c.d])), store.get("ev-weights-v2", {}));
+let favs = new Set(store.get("ev-favs", []));
+let hideFWD = false, hideEssayee = true;
+
+/* ---------- helpers ---------- */
+const $ = id => document.getElementById(id);
+const fr = (n, d=0) => n.toLocaleString("fr-FR", {minimumFractionDigits:d, maximumFractionDigits:d});
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+const transChip = c => {
+  const cls = c.trans === "FWD" ? "" : "ok";
+  return `<span class="chip ${cls}">${TRANS[c.trans]}</span>`;
+};
+const statutChip = c => `<span class="chip ${STATUT[c.statut].cls}">${STATUT[c.statut].t}</span>`;
+const sizeChip = c => c.L > 4.40 ? `<span class="chip mid">Plus grande</span>`
+  : c.L < 4.25 ? `<span class="chip mid">Plus petite</span>`
+  : `<span class="chip ok">Taille idéale</span>`;
+const heartSvg = `<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
+
+function scoreOf(c){
+  const p = parts(c);
+  let tot = 0, wsum = 0;
+  for (const cr of CRIT){ tot += p[cr.k] * weights[cr.k]; wsum += weights[cr.k]; }
+  return wsum ? Math.round(100 * tot / wsum) : 0;
+}
+
+/* ---------- needs ---------- */
+const NEEDS = [
+  "100 % électrique, sans hybride",
+  "Crossover pas trop grand : notre Kia Niro (4,42 m) est plutôt la limite haute",
+  "Assise plus haute que la Scirocco, plus maniable que l'A4",
+  "Place arrière confortable pour une personne grande",
+  "Coffre raisonnable",
+  "Bonne puissance de recharge",
+  "En plus, notre suggestion : propulsion ou 4×4 (voir en bas de page)",
+  "Ni entrée de gamme, ni grand luxe",
+  "Pas de marque chinoise"
+];
+$("needs").innerHTML = NEEDS.map(n => `<li><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>${n}</span></li>`).join("");
+
+/* ---------- weights panel ---------- */
+function renderWeights(){
+  $("weights").innerHTML = `<h3>Ce qui compte pour eux</h3>` + CRIT.map(cr => `
+    <div class="w-row">
+      <label for="w-${cr.k}">${cr.t} <span id="wl-${cr.k}">${W_LABEL[weights[cr.k]]}</span></label>
+      <input type="range" id="w-${cr.k}" min="0" max="3" step="1" value="${weights[cr.k]}" aria-describedby="wh-${cr.k}">
+      <small id="wh-${cr.k}" style="color:var(--muted);font-size:.8rem">${cr.help}</small>
+    </div>`).join("") + `
+    <div class="toggles">
+      <label><input type="checkbox" id="hide-fwd"> Masquer les tractions seules</label>
+      <label><input type="checkbox" id="hide-ess"> Masquer les voitures écartées (Mégane, Elroq, Explorer)</label>
+    </div>
+    <button class="reset" id="reset" type="button">Revenir aux réglages proposés</button>`;
+  for (const cr of CRIT){
+    $("w-" + cr.k).addEventListener("input", e => {
+      weights[cr.k] = +e.target.value;
+      $("wl-" + cr.k).textContent = W_LABEL[weights[cr.k]];
+      store.set("ev-weights-v2", weights);
+      renderRanking();
+    });
+  }
+  $("hide-fwd").checked = hideFWD; $("hide-ess").checked = hideEssayee;
+  $("hide-fwd").addEventListener("change", e => { hideFWD = e.target.checked; renderRanking(); });
+  $("hide-ess").addEventListener("change", e => { hideEssayee = e.target.checked; renderRanking(); });
+  $("reset").addEventListener("click", () => { CRIT.forEach(cr => weights[cr.k] = cr.d); store.set("ev-weights-v2", weights); renderWeights(); renderRanking(); });
+}
+
+/* ---------- ranking ---------- */
+function renderRanking(){
+  if ($("table").innerHTML) renderTable();
+  const list = CARS
+    .filter(c => !(hideFWD && c.trans === "FWD") && !(hideEssayee && (c.statut === "essayee" || c.statut === "ecartee")))
+    .map(c => ({c, s:scoreOf(c)}))
+    .sort((a,b) => b.s - a.s);
+  $("ranking").innerHTML = list.map(({c,s}, i) => `
+    <li class="r-item ${i < 3 ? "top" : ""}">
+      <span class="r-pos num">${i+1}</span>
+      <div class="r-name"><b>${esc(c.nom)}</b><small>${esc(c.version)}</small>
+        <div class="chips">${statutChip(c)}${transChip(c)}${sizeChip(c)}</div></div>
+      <div class="r-score" aria-label="Score ${s} sur 100"><div class="track"><div class="fill" style="width:${s}%"></div></div><span class="num">${s}</span></div>
+      <button class="heart" type="button" data-fav="${c.id}" aria-pressed="${favs.has(c.id)}" aria-label="Coup de cœur : ${esc(c.nom)}">${heartSvg}</button>
+    </li>`).join("");
+  bindHearts();
+}
+function bindHearts(){
+  document.querySelectorAll("[data-fav]").forEach(b => b.onclick = () => {
+    const id = b.dataset.fav;
+    favs.has(id) ? favs.delete(id) : favs.add(id);
+    store.set("ev-favs", [...favs]);
+    document.querySelectorAll(`[data-fav="${id}"]`).forEach(x => x.setAttribute("aria-pressed", favs.has(id)));
+  });
+}
+
+/* ---------- chart ---------- */
+const METRICS = [
+  {k:"L", t:"Longueur", mode:"dot", min:4.1, max:4.8, fmt:v=>fr(v,2)+" m", better:"low", refs:["scirocco","niro","a4"],
+   note:"Plus elle est courte, plus elle se gare facilement. L'A4 qu'ils trouvaient encombrante mesure 4,76 m."},
+  {k:"W", t:"Largeur", mode:"dot", min:1.75, max:1.92, fmt:v=>fr(v,2)+" m", better:"low", refs:["scirocco","niro","a4"],
+   note:"Largeur hors rétroviseurs. Compte dans les rues étroites et les parkings."},
+  {k:"H", t:"Hauteur", mode:"dot", min:1.38, max:1.68, fmt:v=>fr(v,2)+" m", better:"high", refs:["scirocco","a4","niro"],
+   note:"Plus haute = on s'assoit et on sort plus facilement. La Scirocco faisait 1,40 m."},
+  {k:"braq", t:"Braquage", mode:"bar", max:13, fmt:v=>fr(v,1)+" m", better:"low",
+   note:"Diamètre de braquage entre trottoirs. Plus il est petit, plus les demi-tours et les créneaux sont faciles. Les propulsions braquent plus court."},
+  {k:"arriere", t:"Place arrière", mode:"bar", max:5, fmt:v=>fr(v, v % 1 ? 1 : 0)+" / 5", better:"high",
+   note:"Appréciation pour un passager grand : longueur aux jambes, garde au toit, plancher."},
+  {k:"coffre", t:"Coffre", mode:"bar", max:600, fmt:v=>fr(v)+" L", better:"high",
+   note:"Volume sous le cache-bagages, sièges en place (hors petit coffre avant)."},
+  {k:"t1080", t:"Recharge 10→80 %", mode:"bar", max:45, fmt:v=>v+" min", better:"low",
+   note:"Temps sur borne rapide, dans de bonnes conditions. Pour un arrêt sur un trajet un peu long."},
+  {k:"dc", t:"Puissance de charge", mode:"bar", max:200, fmt:v=>v+" kW", better:"high",
+   note:"Puissance maximale en courant continu. Le temps 10→80 % est plus parlant."},
+  {k:"auto", t:"Autonomie", mode:"bar", max:700, fmt:v=>fr(v)+" km", better:"high",
+   note:"WLTP, version retenue. En hiver, comptez 20 à 30 % de moins."},
+  {k:"pmin", t:"Prix", mode:"range", max:60, fmt:(v,c)=>`${c.pmin}–${c.pmax}k CHF`, better:"low",
+   note:"Fourchette de prix catalogue en Suisse, en milliers de francs, pour les versions pertinentes, avant remises."}
+];
+let metric = store.get("ev-metric", "L");
+if (!METRICS.find(m => m.k === metric)) metric = "L";
+
+function renderTabs(){
+  $("tabs").innerHTML = METRICS.map(m => `<button class="tab" role="tab" type="button" aria-selected="${m.k===metric}" data-m="${m.k}">${m.t}</button>`).join("");
+  $("tabs").querySelectorAll(".tab").forEach(b => b.onclick = () => { metric = b.dataset.m; store.set("ev-metric", metric); renderTabs(); renderChart(); });
+}
+
+function renderChart(){
+  const m = METRICS.find(x => x.k === metric);
+  const lo = m.mode === "dot" ? m.min : 0, hi = m.max;
+  const pos = v => 100 * (v - lo) / (hi - lo);
+  const rows = [...CARS].sort((a,b) => m.better === "low" ? a[m.k]-b[m.k] : b[m.k]-a[m.k]);
+  $("chart-note").textContent = m.note;
+  $("chart-legend").innerHTML = m.refs ? `<span><i></i>Repères : leurs anciennes voitures et notre Kia Niro</span>` : "";
+  const refs = (m.refs || []).map((r, i) => `<div class="c-ref" style="left:${pos(REF[r][m.k])}%"><span style="top:${i*18}px">${REF[r].short} ${m.fmt(REF[r][m.k])}</span></div>`).join("");
+  const ticks = m.mode === "dot"
+    ? [lo, (lo+hi)/2, hi].map(v => `<span>${m.fmt(+v.toFixed(3))}</span>`).join("")
+    : [0, hi/2, hi].map(v => `<span>${m.k==="pmin" ? v+"k CHF" : m.k==="arriere" ? fr(v,1) : fr(v)}</span>`).join("");
+  const body = rows.map(c => {
+    const v = c[m.k];
+    let mark;
+    if (m.mode === "dot") mark = `<div class="c-dot" style="left:${pos(v)}%"></div>`;
+    else if (m.mode === "range") mark = `<div class="c-bar" style="width:${pos(c.pmin)}%"></div><div class="c-ext" style="left:${pos(c.pmin)}%;width:${pos(c.pmax)-pos(c.pmin)}%"></div>`;
+    else mark = `<div class="c-bar" style="width:${pos(v)}%"></div>`;
+    return `<div class="c-row" tabindex="0" data-id="${c.id}"><span class="c-label">${esc(c.nom)}</span><div class="c-track">${mark}</div><span class="c-val num">${m.fmt(v,c)}</span></div>`;
+  }).join("");
+  $("chart").innerHTML = `<div class="${m.refs ? "chart-top" : ""}" style="position:relative;display:grid;gap:4px">
+      <div class="c-refs" style="display:grid;grid-template-columns:inherit"></div>
+      ${body}
+    </div>
+    <div class="c-axis"><div></div><div class="num">${ticks}</div><div></div></div>`;
+  // reference lines: overlay aligned on the track column
+  if (m.refs){
+    const wrap = $("chart").firstElementChild;
+    const first = wrap.querySelector(".c-track");
+    const ov = document.createElement("div");
+    ov.className = "c-refs";
+    const place = () => {
+      const wr = wrap.getBoundingClientRect(), tr = first.getBoundingClientRect();
+      ov.style.left = (tr.left - wr.left) + "px"; ov.style.width = tr.width + "px";
+      ov.style.right = "auto"; ov.style.top = "0";
+    };
+    ov.innerHTML = refs;
+    wrap.querySelector(".c-refs").replaceWith(ov);
+    place(); chartPlace = place;
+  } else chartPlace = null;
+  bindTips(m);
+}
+let chartPlace = null;
+window.addEventListener("resize", () => chartPlace && chartPlace());
+
+function bindTips(m){
+  const tip = $("tip");
+  $("chart").querySelectorAll(".c-row").forEach(r => {
+    const c = CARS.find(x => x.id === r.dataset.id);
+    const show = e => {
+      tip.innerHTML = `<b>${esc(c.nom)}</b> · ${m.fmt(c[m.k], c)}<br>${esc(c.version)}<br>${TRANS[c.trans]} · ${STATUT[c.statut].t}`;
+      tip.hidden = false;
+      const b = r.getBoundingClientRect();
+      const x = e && e.clientX ? e.clientX : b.left + b.width/2;
+      tip.style.left = Math.min(window.innerWidth - 270, Math.max(8, x + 12)) + "px";
+      tip.style.top = (b.top - tip.offsetHeight - 6 < 0 ? b.bottom + 6 : b.top - tip.offsetHeight - 6) + "px";
+    };
+    r.addEventListener("mousemove", show);
+    r.addEventListener("focus", () => show());
+    r.addEventListener("mouseleave", () => tip.hidden = true);
+    r.addEventListener("blur", () => tip.hidden = true);
+  });
+}
+
+/* ---------- gabarit ---------- */
+let gabCar = store.get("ev-gab", "kona");
+let gabRefs = {a4:true, scirocco:true, niro:false};
+const S = 100; // 1 m = 100 units
+function sidePath(o){
+  const L = o.L*S, H = o.H*S, G = 175; // ground y
+  const hb = H*0.58, y = v => G - v;
+  return `M ${L*0.015} ${y(22)} L 0 ${y(H*0.36)} Q 0 ${y(hb)} ${L*0.05} ${y(hb)} L ${L*0.30} ${y(hb+H*0.05)} L ${L*0.47} ${y(H)} L ${L*0.84} ${y(H*0.98)} Q ${L*0.95} ${y(H*0.95)} ${L*0.985} ${y(H*0.68)} L ${L} ${y(H*0.36)} L ${L*0.985} ${y(22)} Z`;
+}
+function wheels(o){
+  const fo = (o.L - o.wb)/2*S*0.92;
+  return [fo, fo + o.wb*S].map(x => `<circle cx="${x}" cy="${175-33}" r="33"/>`).join("");
+}
+function renderGabarit(){
+  const sel = $("gab-car");
+  if (!sel.options.length){
+    sel.innerHTML = CARS.map(c => `<option value="${c.id}">${esc(c.nom)}</option>`).join("");
+    sel.onchange = () => { gabCar = sel.value; store.set("ev-gab", gabCar); renderGabarit(); };
+  }
+  if (!CARS.find(c => c.id === gabCar)) gabCar = "explorer";
+  sel.value = gabCar;
+  const c = CARS.find(x => x.id === gabCar);
+  const style = {a4:"stroke:var(--ref);stroke-dasharray:8 5", scirocco:"stroke:var(--ink-2);stroke-dasharray:2 4", niro:"stroke:var(--muted);stroke-dasharray:14 5"};
+  const refSide = Object.keys(REF).filter(k => gabRefs[k]).map(k => `<path d="${sidePath(REF[k])}" fill="none" style="${style[k]};stroke-width:2"/>`).join("");
+  $("svg-side").innerHTML = `
+    <line x1="-10" x2="490" y1="175" y2="175" style="stroke:var(--line);stroke-width:2"/>
+    <path d="${sidePath(c)}" style="fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.5"/>
+    <g style="fill:var(--ink-2)">${wheels(c)}</g>
+    ${refSide}
+    <text x="${c.L*S/2}" y="${175 - c.H*S - 6}" text-anchor="middle" style="fill:var(--accent);font-size:13px;font-weight:700">${fr(c.H,2)} m</text>`;
+  const topRect = (o, attrs) => `<rect x="0" y="${(190 - o.W*S)/2}" width="${o.L*S}" height="${o.W*S}" rx="${o.W*S*0.22}" ${attrs}/>`;
+  const refTop = Object.keys(REF).filter(k => gabRefs[k]).map(k => topRect(REF[k], `fill="none" style="${style[k]};stroke-width:2"`)).join("");
+  $("svg-top").innerHTML = `
+    ${topRect(c, `style="fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.5"`)}
+    ${refTop}
+    <text x="${c.L*S/2}" y="${(190 - c.W*S)/2 + c.W*S/2 + 5}" text-anchor="middle" style="fill:var(--accent);font-size:13px;font-weight:700">${fr(c.L,2)} × ${fr(c.W,2)} m</text>`;
+  const names = {a4:"Audi A4 (ancienne)", scirocco:"VW Scirocco (ancienne)", niro:"Kia Niro (notre voiture)"};
+  $("gab-legend").innerHTML = `<div style="display:flex;gap:8px;align-items:center"><span class="sw" style="border-top-width:3px"></span><b>${esc(c.nom)}</b></div>` +
+    Object.keys(REF).map(k => `<label><input type="checkbox" id="g-${k}" ${gabRefs[k] ? "checked" : ""}><span class="sw" style="border-top:2px dashed;${style[k].replace("stroke:","border-color:").replace(/;stroke-dasharray.*/,"")}"></span>${names[k]}</label>`).join("");
+  Object.keys(REF).forEach(k => $("g-"+k).onchange = e => { gabRefs[k] = e.target.checked; renderGabarit(); });
+  const d = (a,b) => { const cm = Math.round((a-b)*100); return (cm > 0 ? "+" : cm < 0 ? "−" : "±") + Math.abs(cm) + " cm"; };
+  $("gab-cmp").innerHTML = ["a4","scirocco","niro"].map(k => `<li><b>Par rapport à ${names[k].replace(/ \(.*\)/,"")}</b>
+    <span class="num">Longueur ${d(c.L,REF[k].L)} · Largeur ${d(c.W,REF[k].W)} · Hauteur ${d(c.H,REF[k].H)}</span></li>`).join("");
+}
+
+/* ---------- table ---------- */
+const COLS = [
+  {k:"nom", t:"Modèle", f:c=>`<b>${esc(c.nom)}</b>`},
+  {k:"score", t:"Score /100", f:c=>`<b>${c.score}</b>`, b:"high"},
+  {k:"statut", t:"Statut", f:c=>STATUT[c.statut].t},
+  {k:"trans", t:"Transmission", f:c=>TRANS[c.trans]},
+  {k:"L", t:"Longueur", f:c=>fr(c.L,2)+" m", b:"low"},
+  {k:"W", t:"Largeur", f:c=>fr(c.W,2)+" m", b:"low"},
+  {k:"H", t:"Hauteur", f:c=>fr(c.H,2)+" m", b:"high"},
+  {k:"braq", t:"Braquage", f:c=>fr(c.braq,1)+" m", b:"low"},
+  {k:"coffre", t:"Coffre", f:c=>c.coffre+" L", b:"high"},
+  {k:"arriere", t:"Arrière", f:c=>fr(c.arriere, c.arriere % 1 ? 1 : 0)+"/5", b:"high"},
+  {k:"t1080", t:"10→80 %", f:c=>c.t1080+" min", b:"low"},
+  {k:"dc", t:"Charge max", f:c=>c.dc+" kW", b:"high"},
+  {k:"auto", t:"Autonomie", f:c=>c.auto+" km", b:"high"},
+  {k:"hiver", t:"Hiver", f:c=>["","Basique","Bon","Complet"][c.hiver], b:"high"},
+  {k:"pmin", t:"Prix", f:c=>`CHF ${c.pmin}'000–${c.pmax}'000`, b:"low"}
+];
+let sortK = "score", sortDir = -1;
+function renderTable(){
+  CARS.forEach(c => c.score = scoreOf(c));
+  const rows = [...CARS].sort((a,b) => {
+    const x = a[sortK], y = b[sortK];
+    return (typeof x === "string" ? x.localeCompare(y, "fr") : x - y) * sortDir;
+  });
+  const ext = {};
+  COLS.filter(c => c.b).forEach(col => {
+    const vals = CARS.map(c => c[col.k]);
+    const mx = Math.max(...vals), mn = Math.min(...vals);
+    ext[col.k] = col.b === "high" ? {best:mx, worst:mn} : {best:mn, worst:mx};
+  });
+  $("table").innerHTML = `<thead><tr>${COLS.map(col => `<th scope="col" aria-sort="${sortK===col.k ? (sortDir>0?"ascending":"descending") : "none"}"><button type="button" data-k="${col.k}">${col.t}${sortK===col.k ? (sortDir>0?" ▲":" ▼") : ""}</button></th>`).join("")}</tr></thead>
+  <tbody>${rows.map(c => `<tr>${COLS.map(col => {
+    let cls = "";
+    if (col.b && col.k !== "hiver"){ if (c[col.k] === ext[col.k].best) cls = "best"; else if (c[col.k] === ext[col.k].worst) cls = "worst"; }
+    return `<td class="num ${cls}">${col.f(c)}</td>`;
+  }).join("")}</tr>`).join("")}</tbody>`;
+  $("table").querySelectorAll("th button").forEach(b => b.onclick = () => {
+    if (sortK === b.dataset.k) sortDir *= -1; else { sortK = b.dataset.k; sortDir = 1; }
+    renderTable();
+  });
+}
+
+/* ---------- cards ---------- */
+function renderCards(){
+  const out = c => c.statut === "ecartee" || c.statut === "essayee";
+  $("cards").innerHTML = [...CARS].sort((a,b) => out(a) - out(b) || scoreOf(b) - scoreOf(a)).map(c => `
+    <article class="card" id="fiche-${c.id}">
+      <div class="card-head">
+        <div><h3>${esc(c.nom)}</h3><small>${esc(c.version)}</small></div>
+        <button class="heart" type="button" data-fav="${c.id}" aria-pressed="${favs.has(c.id)}" aria-label="Coup de cœur : ${esc(c.nom)}">${heartSvg}</button>
+      </div>
+      <div class="chips">${statutChip(c)}${transChip(c)}${sizeChip(c)}</div>
+      <p class="status-note">${esc(c.statutNote)}</p>
+      <div class="specs num">
+        <div><b>${fr(c.L,2)} m</b><span>Longueur</span></div>
+        <div><b>${fr(c.H,2)} m</b><span>Hauteur</span></div>
+        <div><b>${fr(c.braq,1)} m</b><span>Braquage</span></div>
+        <div><b>${c.coffre} L</b><span>Coffre</span></div>
+        <div><b>${fr(c.arriere, c.arriere % 1 ? 1 : 0)}/5</b><span>Arrière</span></div>
+        <div><b>${c.auto} km</b><span>Autonomie</span></div>
+        <div><b>${c.t1080} min</b><span>10→80 %</span></div>
+        <div><b>${c.dc} kW</b><span>Charge max</span></div>
+        <div><b>${c.pmin}–${c.pmax}k CHF</b><span>Prix</span></div>
+      </div>
+      <div class="pc">
+        <div class="p"><h4>Pour</h4><ul>${c.pour.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
+        <div class="c"><h4>Contre</h4><ul>${c.contre.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>
+      </div>
+      <p class="winter"><b>Hiver :</b> ${esc(c.hiverTxt)}</p>
+      <p class="verdict">${esc(c.verdict)}</p>
+    </article>`).join("");
+  bindHearts();
+}
+
+renderWeights(); renderRanking(); renderTabs(); renderChart(); renderGabarit(); renderTable(); renderCards();
+</script>
+
+</body></html>
